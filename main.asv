@@ -41,25 +41,35 @@ xfir=[];
 % legend('Before','After');
 
 
-% Nlen = 8;
-% fl = 75;
-% fh = 300;
-% fo = 100;
-% wn = [fl, fh]/(fs/2);
+Nlen =12; %(6,8,10,14,   12)
+center_freq = 2200;  %(2238-2272)
+bandwidth =34; %find by 5Hz
+normalized_freq = [center_freq - bandwidth/2, center_freq + bandwidth/2] / (fs/2);
+sf = fir1(100, normalized_freq, 'bandpass');
+window = hamming(101);
+sf = sf .* window';
+zf = filter(sf, 1, z);
+
+
+% center_freq = 2600;  
+% bandwidth =60 ;  
+% normalized_freq = [center_freq - bandwidth/2, center_freq + bandwidth/2] / (fs/2);
+% wn = [fl,fh]/(fs/2);
 % zf = fir1(fo, wn, 'bandpass');
-% [Ahat, sigma2hat] = aryule(zf, Nlen);
-sound=find(abs(z)> thre+0.7);
-xs = z(sound);
-v1= sqrt(varnoise)*rand(length(xs),1);
-v1= filter(1, noise_ar, v1);
-xh = xs-v1;
-Nlen = 16;
-[Ahat, sigma2hat] = aryule(xs, Nlen);
+
+[Ahat, sigma2hat] = aryule(zf, Nlen);
+% sound=find(abs(z)> 0.2);
+% xs = z(sound);
+% v1= sqrt(varnoise)*rand(length(xs),1);
+% v1= filter(1, noise_ar, v1);
+% xh = xs-v1;
+% Nlen = 7;
+% [Ahat, sigma2hat] = aryule(xs, Nlen);
 
 [PhixyNum,PhixyDen,PhiyyNum,PhiyyDen] = spec_add(Ahat, sigma2hat, noise_ar, varnoise);
 
 % [xhatnc, numnc, dennc] = ncw(z, PhixyNum, PhixyDen, PhiyyNum, PhiyyDen);
-% pause(10);
+% % pause(10);
 % soundsc(xhatnc,fs);
 % plot(periodogram(xhatnc,hanning(length(xfir)), fs));
 % legend('Before','After');
@@ -68,6 +78,7 @@ Nlen = 16;
 % pause(10);
 soundsc(xhatc,fs);
 plot(periodogram(xhatc,hanning(length(xhatc)), fs));
+hold on
 legend('Before','After');
 
 
