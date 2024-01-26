@@ -19,6 +19,6 @@ function [xhat,num,den] = ncw(y, PhixyNum, PhixyDen, PhiyyNum, PhiyyDen)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 num = conv(PhixyNum, PhiyyDen);
 den = conv(PhixyDen, PhiyyNum);
-xhat = ncfilter (num,den,y);
+xhat = ncfilt(num, den, y);
 
 end
