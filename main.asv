@@ -40,7 +40,7 @@ xfir=[];
 % plot(xfir);
 % legend('Before','After');
 
-Nar = 20;
+Nar = 40;
 % Nlen =12; %(6,8,10,  12,13,14)
 % center_freq = 2230;  %(2238-2272)
 % bandwidth =10; %find by 5Hz
@@ -49,9 +49,9 @@ Nar = 20;
 % window = hamming(101);
 % sf = sf .* window';
 % zf = filter(sf, 1, z);
-Nlen1 =10;
+Nlen1 = ;
 yac = xcorr(z);
-nac = xcorr(transpose(v));
+nac = xcorr(noisees);
 xac = yac(1:Nar)-nac(1:Nar);
 [Ahat, sigma2hat] = levinson(xac, Nlen1);
 % center_freq = 2600;  
